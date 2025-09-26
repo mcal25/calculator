@@ -1,7 +1,7 @@
 console.log('bee happy 🐝');
 
 function add(a, b) {
-    return a + b;
+    return Number(a) + Number(b);
 }
 
 function subtract(a, b) {
@@ -16,13 +16,13 @@ function divide(a, b) {
     return a / b;
 }
 
-let num1 = 2;
+let num1;
 
-let num2 = 3;
+let num2;
 
 let currentTotal = 0;
 
-let operator = '+';
+let operator;
 
 let getDisplayNumber = function() {
     return document.querySelector('#display-number').innerHTML;
@@ -60,6 +60,10 @@ function applyEventListeners() {
             if (document.querySelector('#display-number').innerHTML == '0') {
                 document.querySelector('#display-number').innerHTML = '';
             }
+            if (num1 != undefined) {
+                setDisplayNumber('');
+            }
+            
             document.querySelector('#display-number').innerHTML += button.innerHTML;
         })
     });
@@ -68,8 +72,6 @@ function applyEventListeners() {
         button.addEventListener('click', function() {
             num1 = getDisplayNumber();
             operator = button.innerHTML;
-            console.log(operator, num1);
-            console.log(button);
             button.style.boxShadow = 'inset 0 0 0 10px #9980be';
             // document.getElementById(`#${button.innerHTML}`).;
         })
@@ -77,11 +79,15 @@ function applyEventListeners() {
 
     clrButton.addEventListener('click', function() {
         setDisplayNumber('0');
+        currentTotal = 0;
     });
 
     equalsButton.addEventListener('click', function() {
-
-    })
+        num2 = getDisplayNumber();
+        let result = operate(num1, operator, num2);
+        setDisplayNumber(result);
+        currentTotal = result;
+    });
 
 }
 
