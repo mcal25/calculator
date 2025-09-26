@@ -24,13 +24,18 @@ let currentTotal = 0;
 
 let operator;
 
-let getDisplayNumber = function() {
+let getDisplayNumber = function () {
     return document.querySelector('#display-number').innerHTML;
 }
 
-let setDisplayNumber = function(n) {
+let setDisplayNumber = function (n) {
     document.querySelector('#display-number').innerHTML = n;
 }
+
+let numberButtons = document.querySelectorAll('.number-button');
+let operatorButtons = document.querySelectorAll('.operator-button');
+let equalsButton = document.querySelector('#equals');
+let clrButton = document.querySelector('#clr');
 
 
 function operate(num1, operator, num2) {
@@ -45,17 +50,10 @@ function operate(num1, operator, num2) {
     }
 }
 
-console.log(operate(num1, 'add', num2));
-
-
 function applyEventListeners() {
-    let numberButtons = document.querySelectorAll('.number-button');
-    let operatorButtons = document.querySelectorAll('.operator-button');
-    let equalsButton = document.querySelector('#equals');
-    let clrButton = document.querySelector('#clr');
 
     numberButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             console.log(button.innerHTML)
             if (document.querySelector('#display-number').innerHTML == '0') {
                 document.querySelector('#display-number').innerHTML = '';
@@ -63,30 +61,43 @@ function applyEventListeners() {
             if (num1 != undefined) {
                 setDisplayNumber('');
             }
-            
+
             document.querySelector('#display-number').innerHTML += button.innerHTML;
         })
     });
 
     operatorButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
+            if (operator != undefined) {
+                num2 = getDisplayNumber();
+                let result = operate(num1, operator, num2);
+                setDisplayNumber(result);
+                currentTotal = result;
+            }
+
             num1 = getDisplayNumber();
             operator = button.innerHTML;
             button.style.boxShadow = 'inset 0 0 0 10px #9980be';
-            // document.getElementById(`#${button.innerHTML}`).;
         })
     });
 
-    clrButton.addEventListener('click', function() {
-        setDisplayNumber('0');
-        currentTotal = 0;
-    });
-
-    equalsButton.addEventListener('click', function() {
+    equalsButton.addEventListener('click', function () {
+        operatorButtons.forEach(button => button.style.boxShadow = '');
         num2 = getDisplayNumber();
         let result = operate(num1, operator, num2);
         setDisplayNumber(result);
         currentTotal = result;
+        operator = '';
+    });
+
+
+    clrButton.addEventListener('click', function () {
+        operatorButtons.forEach(button => button.style.boxShadow = '');
+        setDisplayNumber('0');
+        currentTotal = 0;
+        num1 = undefined;
+        num2 = undefined;
+        operator = undefined;
     });
 
 }
