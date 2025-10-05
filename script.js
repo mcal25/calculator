@@ -58,9 +58,6 @@ function applyEventListeners() {
             if (document.querySelector('#display-number').innerHTML == '0') {
                 document.querySelector('#display-number').innerHTML = '';
             }
-            if (num1 != undefined) {
-                setDisplayNumber('');
-            }
 
             document.querySelector('#display-number').innerHTML += button.innerHTML;
         })
@@ -85,9 +82,10 @@ function applyEventListeners() {
         operatorButtons.forEach(button => button.style.boxShadow = '');
         num2 = getDisplayNumber();
         let result = operate(num1, operator, num2);
+        console.log(result);
         setDisplayNumber(result);
         currentTotal = result;
-        operator = '';
+        operator = null;
     });
 
 
@@ -95,9 +93,9 @@ function applyEventListeners() {
         operatorButtons.forEach(button => button.style.boxShadow = '');
         setDisplayNumber('0');
         currentTotal = 0;
-        num1 = undefined;
-        num2 = undefined;
-        operator = undefined;
+        num1 = null;
+        num2 = null;
+        operator = null;
     });
 
 }
