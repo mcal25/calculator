@@ -59,6 +59,10 @@ function applyEventListeners() {
                 document.querySelector('#display-number').innerHTML = '';
             }
 
+            if (operator != undefined && operator != null) {
+                document.querySelector('#display-number').innerHTML = '';
+            }
+
             document.querySelector('#display-number').innerHTML += button.innerHTML;
         })
     });
